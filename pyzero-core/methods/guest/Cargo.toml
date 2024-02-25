@@ -1,0 +1,11 @@
+[package]
+name = "pyzero-guest"
+version = "0.0.0"
+edition = "2021"
+
+[workspace]
+
+[dependencies]
+risc0-zkvm = { version = "0.20.1",  default-features = false, features = ["std", "getrandom"] }
+rustpython-vm = { git = "https://github.com/cameronfyfe/RustPython.git", branch = "hack-for-risc0", features = ["no-os"] }
+serde = { version = "1.0", default-features = false, features = ["derive"] }

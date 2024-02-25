@@ -1,0 +1,15 @@
+[package]
+name = "pyzero"
+version = "0.0.0"
+edition = "2021"
+
+[features]
+cuda = ["pyzero-core/cuda"]
+
+[dependencies]
+pyzero-core = { path = "../pyzero-core", features = ["prove"] }
+
+anyhow = { workspace = true }
+clap = { version = "4.0", features = ["derive"] }
+serde = { workspace = true }
+serde_json = { workspace = true }

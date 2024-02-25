@@ -1,0 +1,13 @@
+[package]
+name = "pyzero-verify"
+version = "0.0.0"
+edition = "2021"
+
+[dependencies]
+pyzero-core = { path = "../pyzero-core", features = ["verify"] }
+
+anyhow = { workspace = true }
+clap = { version = "4.0", features = ["derive"] }
+risc0-zkvm = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
