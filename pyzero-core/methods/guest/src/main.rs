@@ -1,10 +1,10 @@
 #![no_main]
 
-mod stdout;
+mod sys;
 
 use risc0_zkvm::guest::env;
 use rustpython_vm::{Interpreter, Settings};
-use stdout::{add_stdout_impl, STDOUT};
+use sys::stdout::{add_stdout_impl, STDOUT};
 
 // include this file instead of handling as a crate because `core` library
 // and risc-v based `guest` binary use different `serde` configs
