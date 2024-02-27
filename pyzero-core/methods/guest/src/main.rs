@@ -4,13 +4,14 @@ mod sys;
 
 use risc0_zkvm::guest::env;
 use rustpython_vm::{Interpreter, Settings};
-use sys::stdout::{add_stdout_impl, STDOUT};
 
 // include this file instead of handling as a crate because `core` library
 // and risc-v based `guest` binary use different `serde` configs
 include!("../../interface.rs");
 
-use interface::{PythonCodeManifest, PythonCodeLine, PythonArg, PythonCodeResult, LineRedaction, ArgRedaction};
+use interface::{
+    ArgRedaction, LineRedaction, PythonArg, PythonCodeLine, PythonCodeManifest, PythonCodeResult,
+};
 
 risc0_zkvm::guest::entry!(main);
 
@@ -20,11 +21,7 @@ pub fn main() {
     let mut full_code = String::new();
     let mut public_code = Vec::new();
 
-    for PythonCodeLine {
-        line,
-        redaction,
-    } in &code
-    {
+    for PythonCodeLine { line, redaction } in &code {
         full_code.push_str(line);
         full_code.push_str("\n");
 
@@ -48,22 +45,20 @@ pub fn main() {
 
     run_python_code(&full_code, full_args);
 
-    unsafe {
-        env::commit(&PythonCodeResult {
-            public_code,
-            public_args,
-            stdout: STDOUT.clone(),
-        });
-    }
+    env::commit(&PythonCodeResult {
+        public_code,
+        public_args,
+        stdout: sys::stdout::get_string(),
+    });
 }
 
 fn run_python_code(code: &str, args: Vec<String>) {
     let mut settings = Settings::default();
-    settings.optimize = 1;
     settings.argv = args;
+    settings.optimize = 1;
 
     Interpreter::without_stdlib(settings).enter(|vm| {
-        add_stdout_impl(vm);
+        sys::add_to_vm(&vm);
 
         let scope = vm.new_scope_with_builtins();
 
