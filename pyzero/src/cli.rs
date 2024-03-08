@@ -31,6 +31,10 @@ pub struct Args {
     #[clap(short, long = "proof", default_value = "proof.json", value_parser)]
     pub proof_path: PathBuf,
 
+    /// Receipt file destination
+    #[clap(short, long = "receipt", default_value = "receipt.bin", value_parser)]
+    pub receipt_path: Option<PathBuf>,
+
     /// Execute without generating a proof
     #[clap(short, long)]
     pub dryrun: bool,
