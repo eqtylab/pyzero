@@ -1599,6 +1599,7 @@ name = "pyzero-core"
 version = "0.0.0"
 dependencies = [
  "anyhow",
+ "hex",
  "itertools 0.12.1",
  "pyzero-methods",
  "risc0-zkvm",
@@ -1623,6 +1624,19 @@ dependencies = [
  "risc0-zkvm",
  "serde",
  "serde_json",
+]
+
+[[package]]
+name = "pyzero-web-verifier"
+version = "0.1.0"
+dependencies = [
+ "hex",
+ "risc0-zkvm",
+ "serde",
+ "serde-wasm-bindgen",
+ "serde_json",
+ "wasm-bindgen",
+ "wasm-bindgen-futures",
 ]
 
 [[package]]
@@ -2133,6 +2147,17 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3fb1c873e1b9b056a4dc4c0c198b24c3ffa059243875552b2bd0933b1aee4ce2"
 dependencies = [
  "serde_derive",
+]
+
+[[package]]
+name = "serde-wasm-bindgen"
+version = "0.6.5"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "8302e169f0eddcc139c70f139d19d6467353af16f9fce27e8c30158036a1e16b"
+dependencies = [
+ "js-sys",
+ "serde",
+ "wasm-bindgen",
 ]
 
 [[package]]

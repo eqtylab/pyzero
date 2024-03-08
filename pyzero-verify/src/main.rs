@@ -2,11 +2,13 @@ use std::{fs::File, process::ExitCode};
 
 use anyhow::Result;
 use clap::Parser;
-use pyzero_core::verify::verify_proof;
+use pyzero_core::{guest_id, verify::verify_proof};
 use pyzero_verify::cli;
 
 fn main() -> Result<ExitCode> {
     let cli::Args { proof_file } = cli::Args::parse();
+
+    println!("Verifying proof (guest image ID: {})...", guest_id());
 
     let proof = serde_json::from_reader(File::open(proof_file)?)?;
 

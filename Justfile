@@ -45,5 +45,12 @@ build-pyzero-builder:
 build-pyzero-builder-cuda:
     docker build -t pyzero-builder-cuda -f docker/cuda.dockerfile .
 
+enter-pyzero-builder:
+    docker run --rm -it \
+        -v `pwd`:/build \
+        -w /build \
+        pyzero-builder \
+        bash
+
 _tmp:
     mkdir -p tmp

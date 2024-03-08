@@ -3,12 +3,14 @@ members = [
     "pyzero",
     "pyzero-core",
     "pyzero-core/methods",
-    "pyzero-verify"
+    "pyzero-verify",
+    "web-verifier",
 ]
 resolver = "2"
 
 [workspace.dependencies]
 anyhow = "1.0"
+hex = "0.4.3"
 itertools = "0.12"
 risc0-build = "0.20.1"
 risc0-zkvm = { version = "0.20.1", features = ["getrandom"] }

@@ -13,6 +13,7 @@ path = "./methods"
 
 [dependencies]
 anyhow = { workspace = true }
+hex = { workspace = true }
 itertools = { workspace = true }
 risc0-zkvm = { workspace = true }
 serde = { workspace = true }

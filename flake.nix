@@ -17,10 +17,14 @@
           overlays = [ inputs.rust-overlay.overlays.default ];
         };
 
+        inherit (pkgs) callPackage;
+
         rust-config = {
           extensions = [ "rust-src" ];
           targets = [ "wasm32-unknown-unknown" ];
         };
+
+        wasm-bindgen-cli = callPackage ./nix/wasm-bindgen-cli.nix { };
 
         rust = (pkgs.rust-bin.fromRustupToolchainFile ./rust-toolchain).override rust-config;
 
@@ -30,6 +34,7 @@
         shellPkgs = [
           rustfmt-nightly
           rust
+          wasm-bindgen-cli
         ] ++ (with pkgs; [
           bc
           clang
@@ -40,6 +45,7 @@
           pkg-config
           present-cli
           rustup
+          wasm-pack
         ]);
 
       in
