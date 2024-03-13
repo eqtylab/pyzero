@@ -1609,6 +1609,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "pyzero-journal-parser"
+version = "0.0.0"
+dependencies = [
+ "hex",
+ "risc0-zkvm",
+ "serde",
+ "serde-wasm-bindgen",
+ "serde_json",
+ "wasm-bindgen",
+ "wasm-bindgen-futures",
+]
+
+[[package]]
 name = "pyzero-methods"
 version = "0.0.0"
 dependencies = [
@@ -1626,19 +1639,6 @@ dependencies = [
  "risc0-zkvm",
  "serde",
  "serde_json",
-]
-
-[[package]]
-name = "pyzero-web-verifier"
-version = "0.1.0"
-dependencies = [
- "hex",
- "risc0-zkvm",
- "serde",
- "serde-wasm-bindgen",
- "serde_json",
- "wasm-bindgen",
- "wasm-bindgen-futures",
 ]
 
 [[package]]

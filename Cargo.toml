@@ -1,10 +1,10 @@
 [workspace]
 members = [
+    "journal-parser",
     "pyzero",
     "pyzero-core",
     "pyzero-core/methods",
     "pyzero-verify",
-    "web-verifier",
 ]
 resolver = "2"
 
