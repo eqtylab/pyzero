@@ -7,12 +7,6 @@ include!("../../pyzero-core/methods/interface.rs");
 
 use interface::PythonCodeResult;
 
-// pub struct PythonCodeResult {
-//     pub public_code: Vec<Option<String>>,
-//     pub public_args: Vec<Option<String>>,
-//     pub stdout: String,
-// }
-
 #[wasm_bindgen]
 pub fn json_obj_from_journal_bytes(journal: Vec<u8>) -> Result<JsValue, JsValue> {
     let pyzero_result = pyzero_result_from_journal_bytes(journal)?;
@@ -34,28 +28,16 @@ pub fn statement_from_journal_bytes(journal: Vec<u8>) -> Result<JsValue, JsValue
     let code = pyzero_result
         .public_code
         .iter()
-        .map(|line| {
-            if let Some(line) = line {
-                line
-            } else {
-                "### __PYZERO_REDACTED__ ###"
-            }
-        })
+        .map(|line| line.as_deref().unwrap_or("### __PYZERO_REDACTED__ ###"))
         .collect::<Vec<_>>()
         .join("\n");
 
     let args = pyzero_result
         .public_args
         .iter()
-        .map(|arg| {
-            if let Some(arg) = arg {
-                arg
-            } else {
-                "<__PYZERO_REDACTED__"
-            }
-        })
+        .map(|arg| arg.as_deref().unwrap_or("<__PYZERO_REDACTED__>"))
         .enumerate()
-        .map(|(i, arg)| format!("{}: {}", i, arg))
+        .map(|(i, arg)| format!("sys.argv[{i}] = {arg}"))
         .collect::<Vec<_>>()
         .join("\n");
 
@@ -63,19 +45,23 @@ pub fn statement_from_journal_bytes(journal: Vec<u8>) -> Result<JsValue, JsValue
 
     let statement = format!(
         r#"
-        PyZero Summary:
-        
-        Code:
-        ```python
-        {code}
-        ```
+# PyZero Proof Summary
 
-        Args:
-        {args}
+## Code:
+```python
+{code}
+```
 
-        Stdout:
-        {stdout}
-    "#
+## Args
+```bash
+{args}
+```
+
+## Stdout:
+```bash
+{stdout}
+```
+"#
     );
 
     let statement = JsValue::from_str(&statement);

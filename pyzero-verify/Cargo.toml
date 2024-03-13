@@ -7,6 +7,7 @@ edition = "2021"
 pyzero-core = { path = "../pyzero-core", features = ["verify"] }
 
 anyhow = { workspace = true }
+bincode = { workspace = true }
 clap = { version = "4.0", features = ["derive"] }
 risc0-zkvm = { workspace = true }
 serde = { workspace = true }

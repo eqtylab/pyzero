@@ -20,7 +20,6 @@ fn main() -> Result<()> {
         python_args,
         code_redactions,
         arg_redactions,
-        journal_path,
         proof_path,
         receipt_path,
         dryrun,
@@ -70,20 +69,14 @@ fn main() -> Result<()> {
         (journal, Some(proof))
     };
 
-    // write journal file if user requested it
-    if let Some(journal_path) = journal_path {
-        fs::write(journal_path, serde_json::to_string_pretty(&journal)?)?;
-    }
-
     // write proof file if we generated a proof
     if let Some(proof) = proof.clone() {
-        fs::write(proof_path, serde_json::to_string(&proof)?)?;
+        fs::write(proof_path, bincode::serialize(&proof)?)?;
     }
 
     // write receipt file if we generated a proof and receipt file was requested
     if let (Some(proof), Some(receipt_path)) = (proof, receipt_path) {
-        let receipt = bincode::serialize(&proof.receipt)?;
-        fs::write(receipt_path, receipt)?;
+        fs::write(receipt_path, bincode::serialize(&proof.receipt)?)?;
     }
 
     journal.write_summary(&mut std::io::stdout())?;

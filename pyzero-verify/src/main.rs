@@ -2,15 +2,18 @@ use std::{fs::File, process::ExitCode};
 
 use anyhow::Result;
 use clap::Parser;
-use pyzero_core::{guest_id, verify::verify_proof};
+use pyzero_core::{image_id_from_u32_array, proof::Proof, verify::verify_proof};
 use pyzero_verify::cli;
 
 fn main() -> Result<ExitCode> {
     let cli::Args { proof_file } = cli::Args::parse();
 
-    println!("Verifying proof (guest image ID: {})...", guest_id());
+    let proof: Proof = bincode::deserialize_from(File::open(proof_file)?)?;
 
-    let proof = serde_json::from_reader(File::open(proof_file)?)?;
+    println!(
+        "Verifying proof (guest image ID: {})...",
+        image_id_from_u32_array(proof.image_id)
+    );
 
     if !verify_proof(&proof)? {
         println!("Proof failed to verify.");

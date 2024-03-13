@@ -1620,6 +1620,7 @@ name = "pyzero-verify"
 version = "0.0.0"
 dependencies = [
  "anyhow",
+ "bincode",
  "clap",
  "pyzero-core",
  "risc0-zkvm",
