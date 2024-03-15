@@ -2,6 +2,10 @@
 
 Zero-knowledge proofs for your Python scripts.
 
+![Proof example](readme/journal-parser.png)
+
+Verification example image from [risc0.verify.eqtylab.io](https://risc0.verify.eqtylab.io) ([github repo](https://github.com/eqtylab/risc-zero-verifier))
+
 # Usage
 
 Generate a zero-knowledge proof for a python script
@@ -97,10 +101,24 @@ Build pyzero-verify
 cargo build --release -p pyzero-verify
 ```
 
+# Justfile
+
+Some build commands are provided in the Justfile for convenience, including commands to run CUDA and non-CUDA builds with docker.
+
+Build pyzero (with docker)
+```bash
+just docker-build
+```
+
+Build pyzero with CUDA GPU acceleration (with docker)
+```bash
+just docker-build-cuda
+```
+
 # How it works
 
 PyZero is built on top of two existing projects:
- - [RiscZero](https://github.com/risc0/risc0)
+ - [RISC Zero](https://github.com/risc0/risc0)
  - [RustPython](https://github.com/RustPython/RustPython)
 
-A [fork](https://github.com/cameronfyfe/RustPython/tree/hack-for-risc0) of RustPython is compiled to Risc-V and run in the RiscZero Virtual Machine. This enables using the same RiscZero guest image for generating and verifying zero-knowledge proofs for programs written in Python.
+A [fork](https://github.com/cameronfyfe/RustPython/tree/hack-for-risc0) of RustPython is compiled to RISC-V and run in the RISC Zero Virtual Machine. This enables using the same RISC Zero guest image for generating and verifying zero-knowledge proofs for multiple programs written in Python.
